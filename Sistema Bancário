@@ -1,0 +1,72 @@
+menu = """
+[D] Deposito
+[E] Extrato
+[S] Sacar
+[Q] Sair"""
+
+saldo = 0
+valor_limite_saque = 500
+extrato = ""
+quantidade_saques = 0
+NUMERO_SAQUE = 3
+
+while True:
+
+    opcao = str(input("Favor informar sua opção: ").upper())
+
+    if opcao == 'D':
+
+        valor = float(input('Valor de deposito: '))
+        
+        if valor > 0:
+
+            saldo += valor
+            extrato += f"Deposito R$ {valor:.2f}\n"
+            print(f'Seu saldo atual é: R${saldo:.2f}')
+
+        else:
+
+            print('ERROR. Valor informado invalido')
+    
+    elif opcao == 'E':
+
+        print(f'EXTRATO'.center(51,'*'))
+        print('\nNão foi realizado movimentação\n'if not extrato else extrato)
+        print(f'Saldo: R$ {saldo:.2f}\n')
+        print(f''.center(51,'*'))
+
+    elif opcao =='S':
+
+        saque = float(input('Informe o valor que deseja sacar: '))
+
+        limite_saldo = saque > saldo
+        limite_saque = saque > valor_limite_saque
+        quantidade_limite_saques = quantidade_saques >= NUMERO_SAQUE
+
+        if limite_saldo:
+            
+            print('ERROR. Saldo insuficiente')
+        
+        elif limite_saque:
+
+            print('ERROR. Você excedeu o limite de saque')
+
+        elif quantidade_limite_saques:
+
+            print('ERROR. Excedeu limite maximo de saques diarios')
+
+        elif saque > 0:
+
+            saldo -= saque
+            extrato += f'Saque R$ {saque:.2f}\n'
+            quantidade_saques += 1
+            print(f'Seu saldo atual é:{saldo:.2f}')
+        else:
+            print('ERROR. Valor informado invalido')
+
+    elif opcao == 'Q':
+        print('Obrigado pela preferencia. Volte sempre')
+        break
+
+    else:
+        print('Opção invalida, favor tentar novamente')
